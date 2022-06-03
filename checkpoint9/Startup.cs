@@ -34,9 +34,11 @@ namespace checkpoint9
       services.AddScoped<IDbConnection>(x => CreateDbConnection());
 
       services.AddScoped<AccountsRepository>();
+      services.AddTransient<VaultKeepsRepository>();
       services.AddTransient<KeepsRepository>();
       services.AddTransient<VaultsRepository>();
 
+      services.AddTransient<VaultKeepsService>();
       services.AddTransient<KeepsService>();
       services.AddTransient<VaultsService>();
       services.AddTransient<ProfilesService>();
