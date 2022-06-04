@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using checkpoint9.Models;
 using Dapper;
 
@@ -25,6 +27,18 @@ namespace checkpoint9.Repositories
       return _db.QueryFirstOrDefault<Account>(sql, new { id });
     }
 
+    internal List<Vault> GetMyVaults(string id)
+    {
+      // string sql = "SELECT a.*, v.* FROM vaults JOIN accounts a ON v.creatorId = a.id WHERE v.creatorId = @id;";
+      // return _db.Query<Vault>(sql, new { id }).ToList();
+      string sql = "SELECT a.*, v.* FROM vaults v JOIN accounts a ON v.creatorId = a.id WHERE v.creatorId = @id;";
+      return _db.Query<Account, Vault, Vault>(sql, (a, v) =>
+      {
+        v.Creator = a;
+        return v;
+      }, new { id }).ToList();
+    }
+
     internal Account Create(Account newAccount)
     {
       string sql = @"
@@ -47,5 +61,6 @@ namespace checkpoint9.Repositories
       _db.Execute(sql, update);
       return update;
     }
+
   }
 }

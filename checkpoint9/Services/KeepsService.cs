@@ -19,6 +19,15 @@ namespace checkpoint9.Services
       return _repo.Get();
     }
 
+    internal List<Keep> GetKeepsByProfileId(string id)
+    {
+      if (id == null)
+      {
+        throw new Exception("Invalid Profile Id");
+      }
+      return _repo.GetKeepsByProfileId(id);
+    }
+
     internal Keep Get(int id, string userId)
     {
       Keep found = _repo.Get(id);
@@ -48,6 +57,7 @@ namespace checkpoint9.Services
       return original;
 
     }
+
 
     internal void Delete(int id, string userId)
     {

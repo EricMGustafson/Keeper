@@ -37,6 +37,7 @@ namespace checkpoint9
       services.AddTransient<VaultKeepsRepository>();
       services.AddTransient<KeepsRepository>();
       services.AddTransient<VaultsRepository>();
+      services.AddTransient<ProfilesRepository>();
 
       services.AddTransient<VaultKeepsService>();
       services.AddTransient<KeepsService>();

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using checkpoint9.Models;
 using checkpoint9.Repositories;
 
@@ -35,6 +36,15 @@ namespace checkpoint9.Services
         }
       }
       return found;
+    }
+
+    internal List<Vault> GetVaultsByProfileId(string id)
+    {
+      if (id == null)
+      {
+        throw new Exception("Invalid Profile Id");
+      }
+      return _repo.GetVaultsByProfileId(id);
     }
 
     internal Vault Create(Vault vaultData)

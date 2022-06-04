@@ -15,8 +15,8 @@ namespace checkpoint9.Repositories
 
     internal Profile GetProfileById(string id)
     {
-      string sql = "SELECT * FROM profiles WHERE id = @id;";
-      return _db.QueryFirstOrDefault<Profile>(sql, id);
+      string sql = "SELECT * FROM accounts WHERE id = @id;";
+      return _db.QueryFirstOrDefault<Profile>(sql, new { id });
     }
   }
 }

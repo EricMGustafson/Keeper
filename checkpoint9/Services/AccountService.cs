@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using checkpoint9.Models;
 using checkpoint9.Repositories;
 
@@ -35,6 +36,11 @@ namespace checkpoint9.Services
       original.Name = editData.Name.Length > 0 ? editData.Name : original.Name;
       original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
       return _repo.Edit(original);
+    }
+
+    internal List<Vault> GetMyVaults(string id)
+    {
+      return _repo.GetMyVaults(id);
     }
   }
 }

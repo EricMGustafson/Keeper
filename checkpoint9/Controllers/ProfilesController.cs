@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using checkpoint9.Models;
 using checkpoint9.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,34 @@ namespace checkpoint9.Controllers
       {
         Profile profile = _ps.GetProfileById(id);
         return Ok(profile);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("{id}/keeps")]
+    public ActionResult<List<Keep>> GetKeepsByProfileId(string id)
+    {
+      try
+      {
+        List<Keep> profileKeeps = _ks.GetKeepsByProfileId(id);
+        return Ok(profileKeeps);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("{id}/vaults")]
+    public ActionResult<List<Vault>> GetVaultsByProfileId(string id)
+    {
+      try
+      {
+        List<Vault> profileVaults = _vs.GetVaultsByProfileId(id);
+        return Ok(profileVaults);
       }
       catch (Exception e)
       {

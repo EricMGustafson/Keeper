@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using checkpoint9.Models;
@@ -22,6 +23,16 @@ namespace checkpoint9.Repositories
         v.Creator = a;
         return v;
       }, new { id }).FirstOrDefault();
+    }
+
+    internal List<Vault> GetVaultsByProfileId(string id)
+    {
+      string sql = "SELECT a.*, k.* FROM vaults k JOIN accounts a ON k.creatorId = @id;";
+      return _db.Query<Account, Vault, Vault>(sql, (a, v) =>
+      {
+        v.Creator = a;
+        return v;
+      }, new { id }).ToList();
     }
 
     internal Vault Create(Vault vaultData)

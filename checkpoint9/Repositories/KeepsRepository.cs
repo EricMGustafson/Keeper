@@ -35,7 +35,15 @@ namespace checkpoint9.Repositories
       }, new { id }).FirstOrDefault();
     }
 
-
+    internal List<Keep> GetKeepsByProfileId(string id)
+    {
+      string sql = "SELECT a.*, k.* FROM keeps k JOIN accounts a ON k.creatorId = @id;";
+      return _db.Query<Account, Keep, Keep>(sql, (a, k) =>
+      {
+        k.Creator = a;
+        return k;
+      }, new { id }).ToList();
+    }
 
     internal Keep Create(Keep keepData)
     {
