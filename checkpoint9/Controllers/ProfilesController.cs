@@ -9,13 +9,13 @@ namespace checkpoint9.Controllers
   [Route("api/[controller]")]
   public class ProfilesController : ControllerBase
   {
-    private readonly AccountService _acs;
+    private readonly ProfilesService _ps;
     private readonly KeepsService _ks;
     private readonly VaultsService _vs;
 
-    public ProfilesController(AccountService acs, KeepsService ks, VaultsService vs)
+    public ProfilesController(ProfilesService ps, KeepsService ks, VaultsService vs)
     {
-      _acs = acs;
+      _ps = ps;
       _ks = ks;
       _vs = vs;
     }
@@ -25,7 +25,7 @@ namespace checkpoint9.Controllers
     {
       try
       {
-        Account profile = _acs.GetProfileByEmail(id);
+        Profile profile = _ps.GetProfileById(id);
         return Ok(profile);
       }
       catch (Exception e)
