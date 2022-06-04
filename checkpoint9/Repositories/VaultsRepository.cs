@@ -37,7 +37,7 @@ namespace checkpoint9.Repositories
 
     internal Vault Create(Vault vaultData)
     {
-      string sql = "INSERT INTO vaults (name, description, creatorId) VALUES (@Name, @Description, @CreatorId); SELECT LAST_INSERT_ID();";
+      string sql = "INSERT INTO vaults (name, description, isPrivate, creatorId) VALUES (@Name, @Description, @IsPrivate, @CreatorId); SELECT LAST_INSERT_ID();";
       vaultData.Id = _db.ExecuteScalar<int>(sql, vaultData);
       return vaultData;
     }

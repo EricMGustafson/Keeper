@@ -17,25 +17,23 @@ namespace checkpoint9.Repositories
 
     internal VaultKeep GetMembership(int id, string userId)
     {
-      string sql = "SELECT * FROM vaultkeeps vk WHERE keepId = @id AND vaultId = @userId;";
+      string sql = "SELECT * FROM vaultkeeps vk WHERE keepId = @id;";
       return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });
     }
 
     internal List<VaultKeepViewModel> GetByVaultId(int id)
     {
       string sql = @"
-      SELECT
-      a.*,
-      k.*,
-      v.*,
-      vk.id AS vaultKeepId
-      FROM vaultkeeps vk
-      JOIN vaults v ON vk.vaultId = v.id
-      JOIN keeps k ON vk.keepId = k.id
-      JOIN accounts a ON v.creatorId = a.id
-      WHERE vk.vaultId = @id;
+       SELECT
+            a.*,
+            k.*,
+            vk.id AS vaultKeepId
+        FROM vaultkeeps vk
+        JOIN keeps k ON vk.keepId = k.id
+        JOIN accounts a ON k.creatorId = a.id
+        WHERE vk.vaultId = @id
       ;";
-      return _db.Query<Account, Keep, VaultKeepViewModel, VaultKeepViewModel>(sql, (a, k, vk) =>
+      return _db.Query<Account, VaultKeepViewModel, VaultKeepViewModel>(sql, (a, vk) =>
       {
         vk.Creator = a;
         return vk;
