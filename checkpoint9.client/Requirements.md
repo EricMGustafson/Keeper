@@ -13,8 +13,6 @@ Anytime a keeps details are viewed, the view count is incremented
 Create and Delete Vaults
 Users can only Delete things they created
 Add keeps to vaults
-All No Auth API tests pass
-All Invalid Auth API tests pass
 UI adheres to all phases of CodeWorks Design Requirements
 
 
@@ -33,6 +31,8 @@ Users can share to other popular social media
 -----Completed-----
 Users can Register, login and automatically authenticated on refresh
 All Valid Auth API tests pass
+All No Auth API tests pass
+All Invalid Auth API tests pass
 
 
 
