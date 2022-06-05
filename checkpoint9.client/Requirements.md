@@ -21,7 +21,6 @@ UI adheres to all phases of CodeWorks Design Requirements
 Keeps should be tagged, allowing users find keeps by tag
 Users can create custom tags
 Tags are not duplicated (Games,games,GAMES)
-Stretch Goal API tests pass
 Implement pagination or infinite scroll
 Users can extend their profile to include a bio, hobbies, ect...
 Users can share to other popular social media
@@ -36,7 +35,8 @@ All Invalid Auth API tests pass
 
 
 
-
+-----Stretch Completed-----
+Stretch Goal API tests pass
 
 
 

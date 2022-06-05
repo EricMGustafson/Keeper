@@ -1,33 +1,28 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <nav
+    class="
+      navbar navbar-expand-lg
+      justify-content-between
+      navbar-dark
+      bg-success
+      border-bottom border-info
+      px-3
+    "
+  >
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
+      <div
+        class="d-flex flex-column align-items-center"
+        title="Go to Home Page"
+      >
+        <img
+          class="logo rounded"
+          alt="logo"
+          src="../assets/img/keeprLogo.png"
+          height="45"
+        />
       </div>
     </router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon" />
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
-        <li>
-          <router-link
-            :to="{ name: 'About' }"
-            class="btn text-success lighten-30 selectable text-uppercase"
-          >
-            About
-          </router-link>
-        </li>
-      </ul>
-      <!-- LOGIN COMPONENT HERE -->
+    <div>
       <Login />
     </div>
   </nav>
@@ -44,6 +39,9 @@ export default {
 <style scoped>
 a:hover {
   text-decoration: none;
+}
+.logo {
+  width: 2.5em;
 }
 .nav-link {
   text-transform: uppercase;

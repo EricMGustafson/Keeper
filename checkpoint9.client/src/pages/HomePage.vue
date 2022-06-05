@@ -1,35 +1,45 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo" class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="masonry-container">
+        <div v-for="k in keeps" :key="k.id">
+          <Keep :keep="k" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { computed } from '@vue/reactivity'
+import { AppState } from '../AppState'
 export default {
-  name: 'Home'
+  setup() {
+    return {
+      keeps: computed(() => AppState.keeps)
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.home{
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
-  .home-card{
-    width: 50vw;
-    > img{
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
+.masonry-container {
+  columns: 4 20vw;
+  column-gap: 2rem;
+  div {
+    margin: 0 1rem 1rem 0;
+    display: inline-block;
+    width: 100%;
+  }
+  @for $i from 1 through 36 {
+    div:nth-child(#{$i}) {
+      $h: (random(400) + 200) + px;
+      height: $h;
+      // line-height: $h;
+      div {
+        height: 100%;
+        width: 100%;
+      }
     }
   }
 }
