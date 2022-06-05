@@ -39,6 +39,8 @@ namespace checkpoint9.Services
       {
         throw new Exception("This is not your Keep");
       }
+      found.Views++;
+      _repo.Edit(found);
       return found;
     }
 

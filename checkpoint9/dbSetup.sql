@@ -25,9 +25,9 @@ CREATE TABLE IF NOT EXISTS keeps (
   name VARCHAR(255) NOT NULL,
   description TEXT,
   img TEXT NOT NULL,
-  views INT,
-  kept INT,
-  shares INT,
+  views INT DEFAULT 0,
+  kept INT DEFAULT 0,
+  shares INT DEFAULT 0,
   creatorId VARCHAR(255) NOT NULL,
 
   FOREIGN KEY (creatorId)

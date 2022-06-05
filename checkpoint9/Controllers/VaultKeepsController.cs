@@ -53,11 +53,5 @@ namespace checkpoint9.Controllers
         return BadRequest(e.Message);
       }
     }
-
-
-
-
-
-
   }
 }

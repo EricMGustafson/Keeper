@@ -15,12 +15,6 @@ namespace checkpoint9.Repositories
       _db = db;
     }
 
-    internal VaultKeep GetMembership(int id, string userId)
-    {
-      string sql = "SELECT * FROM vaultkeeps vk WHERE keepId = @id;";
-      return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });
-    }
-
     internal List<VaultKeepViewModel> GetByVaultId(int id)
     {
       string sql = @"

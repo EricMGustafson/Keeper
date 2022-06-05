@@ -23,18 +23,14 @@ namespace checkpoint9.Services
       {
         throw new Exception("Vault ID not found.");
       }
-      if (found.CreatorId != userId && userId != null)
-      {
-        throw new Exception("This is not your Vault.");
-      }
       if (found.IsPrivate && found.CreatorId != userId)
       {
-        VaultKeep membership = _vkrepo.GetMembership(id, userId);
-        if (membership == null)
-        {
-          throw new Exception("You do not have access to this Vault.");
-        }
+        throw new Exception("You do not have access to this Vault.");
       }
+      // if (found.CreatorId != userId && userId != null)
+      // {
+      //   throw new Exception("This is not your Vault.");
+      // }
       return found;
     }
 
@@ -44,7 +40,11 @@ namespace checkpoint9.Services
       {
         throw new Exception("Invalid Profile Id");
       }
-      return _repo.GetVaultsByProfileId(id);
+      List<Vault> allVaults = _repo.GetVaultsByProfileId(id);
+      List<Vault> publicVaults = allVaults.FindAll(v => !v.IsPrivate);
+      return publicVaults;
+
+
     }
 
     internal Vault Create(Vault vaultData)
@@ -58,6 +58,7 @@ namespace checkpoint9.Services
       original.Name = updateData.Name ?? original.Name;
       original.Description = updateData.Description ?? original.Description;
       original.IsPrivate = updateData.IsPrivate == false ? updateData.IsPrivate : original.IsPrivate;
+      original.CreatorId = updateData.CreatorId ?? original.CreatorId;
       _repo.Edit(original);
       return original;
 

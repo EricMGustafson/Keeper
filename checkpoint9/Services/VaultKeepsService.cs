@@ -8,15 +8,26 @@ namespace checkpoint9.Services
   public class VaultKeepsService
   {
     private readonly VaultKeepsRepository _repo;
+    private readonly VaultsRepository _vrepo;
 
-    public VaultKeepsService(VaultKeepsRepository repo)
+    public VaultKeepsService(VaultKeepsRepository repo, VaultsRepository vrepo)
     {
       _repo = repo;
+      _vrepo = vrepo;
     }
 
     internal List<VaultKeepViewModel> GetByVaultId(int id)
     {
-      return _repo.GetByVaultId(id);
+      Vault vault = _vrepo.Get(id);
+      if (!vault.IsPrivate)
+      {
+        return _repo.GetByVaultId(id);
+      }
+      else
+      {
+        throw new Exception("This Vault is Private.");
+      }
+
     }
 
     private VaultKeep GetById(int id)
@@ -31,6 +42,11 @@ namespace checkpoint9.Services
 
     internal VaultKeep Create(VaultKeep vaultKeepData)
     {
+      Vault vault = _vrepo.Get(vaultKeepData.VaultId);
+      if (vault.CreatorId != vaultKeepData.CreatorId)
+      {
+        throw new Exception("You can not add keeps to Vaults that you do not own.");
+      }
       return _repo.Create(vaultKeepData);
     }
 

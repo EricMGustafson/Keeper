@@ -8,7 +8,6 @@ The Vault Page shows only the keeps in that vault
 The user should be pushed back to the home page when they attempt to open a Vault Page for a vault they do not have access to
 On the Vault Page, users can remove keeps from their vaults
 Anytime a keep is kept in a vault the keep count is incremented
-Users can Register, login and automatically authenticated on refresh
 Create and Delete Keeps
 Anytime a keeps details are viewed, the view count is incremented
 Create and Delete Vaults
@@ -32,6 +31,7 @@ Users can share to other popular social media
 
 
 -----Completed-----
+Users can Register, login and automatically authenticated on refresh
 All Valid Auth API tests pass
 
 
