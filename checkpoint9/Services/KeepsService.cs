@@ -39,8 +39,11 @@ namespace checkpoint9.Services
       {
         throw new Exception("This is not your Keep");
       }
-      found.Views++;
-      _repo.Edit(found);
+      if (found.CreatorId != userId)
+      {
+        ++found.Views;
+        _repo.Edit(found);
+      }
       return found;
     }
 
@@ -48,6 +51,11 @@ namespace checkpoint9.Services
     {
       return _repo.Create(keepData);
     }
+
+    // internal Keep AddView(Keep keep)
+    // {
+
+    // }
 
     internal Keep Edit(Keep updateData)
     {

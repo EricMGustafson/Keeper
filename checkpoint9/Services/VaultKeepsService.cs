@@ -9,11 +9,13 @@ namespace checkpoint9.Services
   {
     private readonly VaultKeepsRepository _repo;
     private readonly VaultsRepository _vrepo;
+    private readonly KeepsRepository _krepo;
 
-    public VaultKeepsService(VaultKeepsRepository repo, VaultsRepository vrepo)
+    public VaultKeepsService(VaultKeepsRepository repo, VaultsRepository vrepo, KeepsRepository krepo)
     {
       _repo = repo;
       _vrepo = vrepo;
+      _krepo = krepo;
     }
 
     internal List<VaultKeepViewModel> GetByVaultId(int id)
@@ -47,6 +49,9 @@ namespace checkpoint9.Services
       {
         throw new Exception("You can not add keeps to Vaults that you do not own.");
       }
+      Keep keep = _krepo.Get(vaultKeepData.KeepId);
+      keep.Kept++;
+      _krepo.Edit(keep);
       return _repo.Create(vaultKeepData);
     }
 
@@ -57,6 +62,9 @@ namespace checkpoint9.Services
       {
         throw new Exception("You may not delete this VaultKeep.");
       }
+      Keep keep = _krepo.Get(found.KeepId);
+      keep.Kept--;
+      _krepo.Edit(keep);
       _repo.Delete(id);
     }
 

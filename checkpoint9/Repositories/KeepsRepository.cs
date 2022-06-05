@@ -54,7 +54,7 @@ namespace checkpoint9.Repositories
 
     internal void Edit(Keep original)
     {
-      string sql = "UPDATE keeps SET name = @Name, description = @Description, img = @Img WHERE id = @id;";
+      string sql = "UPDATE keeps SET name = @Name, description = @Description, img = @Img, views = @Views, kept = @Kept, shares = @Shares WHERE id = @id;";
       _db.Execute(sql, original);
     }
 

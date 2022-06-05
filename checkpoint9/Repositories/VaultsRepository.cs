@@ -17,7 +17,7 @@ namespace checkpoint9.Repositories
 
     internal Vault Get(int id)
     {
-      string sql = "SELECT a.*, v.* FROM vaults v JOIN accounts a ON v.id = @id;";
+      string sql = "SELECT a.*, v.* FROM vaults v JOIN accounts a ON v.creatorId = a.id WHERE v.id = @id;";
       return _db.Query<Account, Vault, Vault>(sql, (a, v) =>
       {
         v.Creator = a;
@@ -27,7 +27,7 @@ namespace checkpoint9.Repositories
 
     internal List<Vault> GetVaultsByProfileId(string id)
     {
-      string sql = "SELECT a.*, k.* FROM vaults k JOIN accounts a ON k.creatorId = @id;";
+      string sql = "SELECT a.*, v.* FROM vaults v JOIN accounts a ON v.creatorId = @id;";
       return _db.Query<Account, Vault, Vault>(sql, (a, v) =>
       {
         v.Creator = a;
@@ -44,7 +44,7 @@ namespace checkpoint9.Repositories
 
     internal void Edit(Vault original)
     {
-      string sql = "UPDATE vaults SET name = @Name, description = @Description, isPrivate = @IsPrivate WHERE id = @id;";
+      string sql = "UPDATE vaults SET name = @Name, description = @Description, isPrivate = @IsPrivate, creatorId = @CreatorId WHERE id = @Id;";
       _db.Execute(sql, original);
     }
 

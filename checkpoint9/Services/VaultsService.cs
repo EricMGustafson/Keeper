@@ -27,10 +27,6 @@ namespace checkpoint9.Services
       {
         throw new Exception("You do not have access to this Vault.");
       }
-      // if (found.CreatorId != userId && userId != null)
-      // {
-      //   throw new Exception("This is not your Vault.");
-      // }
       return found;
     }
 
@@ -55,10 +51,13 @@ namespace checkpoint9.Services
     internal Vault Edit(Vault updateData)
     {
       Vault original = Get(updateData.Id, updateData.CreatorId);
+      if (updateData.CreatorId != original.CreatorId)
+      {
+        throw new Exception("This vault does not belong to you.");
+      }
       original.Name = updateData.Name ?? original.Name;
       original.Description = updateData.Description ?? original.Description;
       original.IsPrivate = updateData.IsPrivate == false ? updateData.IsPrivate : original.IsPrivate;
-      original.CreatorId = updateData.CreatorId ?? original.CreatorId;
       _repo.Edit(original);
       return original;
 
