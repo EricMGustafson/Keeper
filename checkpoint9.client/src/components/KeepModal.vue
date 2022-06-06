@@ -3,7 +3,7 @@
     <template #modal-body>
       <div class="container-fluid position-relative text-info">
         <div class="row">
-          <div class="col-md-6 gx-0">
+          <div class="col-md-6 gx-0 vh-70">
             <img
               class="object-fit rounded elevation-3"
               :src="keep.img"
@@ -22,7 +22,7 @@
                 ></button>
               </div>
               <div class="col-12 pt-5 d-flex justify-content-center">
-                <div class="me-4 d-flex">
+                <div class="me-4 d-flex" title="Times Viewed">
                   <h4 class="mb-4">
                     <i class="mdi mdi-eye text-success align-middle"></i>
                   </h4>
@@ -30,7 +30,7 @@
                     {{ keep.views }}
                   </p>
                 </div>
-                <div class="d-flex">
+                <div class="d-flex" title="Times Kept">
                   <h4>
                     <img
                       class="keepr-logo mb-1"
@@ -42,7 +42,7 @@
                     {{ keep.kept }}
                   </p>
                 </div>
-                <div class="ms-4 d-flex">
+                <div class="ms-4 d-flex" title="Times Shared">
                   <h4>
                     <i class="mdi mdi-vector-polyline text-success"> </i>
                   </h4>
@@ -95,18 +95,27 @@
                     </select>
                   </div>
                 </div>
-                <div>
-                  <h1 class="mb-0">
-                    <i class="mdi mdi-delete-outline"></i>
-                  </h1>
+                <div v-if="keep.creatorId == user.id">
+                  <h2 class="mb-0 selectable" title="Delete Keep">
+                    <i
+                      class="mdi mdi-delete-outline"
+                      @click="deleteKeep(keep.id)"
+                    ></i>
+                  </h2>
                 </div>
-                <div class="d-flex">
+                <div
+                  class="d-flex clickable"
+                  title="Go to Profile"
+                  @click="goToProfile(keep.creatorId)"
+                >
                   <img
                     class="acc-image rounded"
                     :src="keep.creator?.picture"
                     alt=""
                   />
-                  <h6>{{ keep.creator?.name }}</h6>
+                  <h5 class="mb-0 align-self-center ms-2">
+                    {{ keep.creator?.name }}
+                  </h5>
                 </div>
               </div>
             </div>
@@ -128,14 +137,19 @@ import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { keepsService } from '../services/KeepsService'
 import { Modal } from 'bootstrap'
+import { useRouter } from 'vue-router'
+import { modifierPhases } from '@popperjs/core'
 export default {
   setup() {
     const vaultId = ref("1")
+    const router = useRouter()
     onMounted(async () => {
 
     })
     return {
       vaultId,
+      router,
+
       async setKeepToVault(id) {
         try {
           const newVk = { keepId: id, vaultId: vaultId.value }
@@ -147,8 +161,30 @@ export default {
           Pop.toast(error.message, 'error')
         }
       },
+      async deleteKeep(id) {
+        try {
+          if (await Pop.confirm()) {
+            await keepsService.deleteKeep(id)
+            Modal.getOrCreateInstance(document.getElementById('keep-modal')).toggle()
+          }
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
+        }
+      },
+      async goToProfile(id) {
+        try {
+          router.push({ name: 'Profile', params: { id: id } })
+          Modal.getOrCreateInstance(document.getElementById('keep-modal')).toggle()
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
+        }
+      },
+
       keep: computed(() => AppState.activeKeep),
-      vaults: computed(() => AppState.userVaults)
+      vaults: computed(() => AppState.userVaults),
+      user: computed(() => AppState.account)
     }
   }
 }
@@ -163,6 +199,9 @@ export default {
 .keepr-logo {
   height: 2.5vh;
 }
+.vh-70 {
+  height: 70vh;
+}
 .object-fit {
   height: 100%;
   width: 100%;
@@ -174,10 +213,12 @@ hr {
 }
 .acc-image {
   height: 4vh;
+}
+.clickable {
   transition: all 0.9s ease;
   cursor: pointer;
   &:hover {
-    transform: scale(1.15);
+    transform: scale(1.08);
   }
 }
 </style>
