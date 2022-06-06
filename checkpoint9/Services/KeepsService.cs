@@ -35,10 +35,6 @@ namespace checkpoint9.Services
       {
         throw new Exception("Keep ID not found.");
       }
-      if (found.CreatorId != userId && userId != null)
-      {
-        throw new Exception("This is not your Keep");
-      }
       if (found.CreatorId != userId)
       {
         ++found.Views;
@@ -52,14 +48,18 @@ namespace checkpoint9.Services
       return _repo.Create(keepData);
     }
 
-    // internal Keep AddView(Keep keep)
-    // {
-
-    // }
+    internal void HasAccess(string originalId, string accessorId)
+    {
+      if (originalId != accessorId)
+      {
+        throw new Exception("This is not your keep");
+      }
+    }
 
     internal Keep Edit(Keep updateData)
     {
       Keep original = Get(updateData.Id, updateData.CreatorId);
+      HasAccess(original.CreatorId, updateData.CreatorId);
       original.Name = updateData.Name ?? original.Name;
       original.Description = updateData.Description ?? original.Description;
       original.Img = updateData.Img ?? original.Img;
@@ -72,6 +72,7 @@ namespace checkpoint9.Services
     internal void Delete(int id, string userId)
     {
       Keep keep = Get(id, userId);
+      HasAccess(keep.CreatorId, userId);
       _repo.Delete(id);
     }
   }

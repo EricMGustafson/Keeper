@@ -1,5 +1,5 @@
 <template>
-  <div class="keep rounded mt-4 h-100">
+  <div class="keep rounded mt-4 h-100 elevation-3" @click.stop="activeKeep">
     <div
       class="
         d-flex
@@ -9,12 +9,18 @@
         align-items-end
         text-light
       "
+      :title="keep.description"
     >
       <div>
         <h2>{{ keep.name }}</h2>
       </div>
-      <div>
-        <img class="acc-image" :src="keep.creator.picture" alt="" />
+      <div @click.stop="goToProfile">
+        <img
+          class="acc-image"
+          :title="`Go to ${keep.creator.name}'s profile`"
+          :src="keep.creator.picture"
+          alt=""
+        />
       </div>
     </div>
   </div>
@@ -23,6 +29,12 @@
 
 <script>
 import { computed } from '@vue/reactivity'
+import Pop from '../utils/Pop'
+import { logger } from '../utils/Logger'
+import { AppState } from '../AppState'
+import { Modal } from 'bootstrap'
+import { useRouter } from 'vue-router'
+import { keepsService } from '../services/KeepsService'
 export default {
   props: {
     keep: {
@@ -31,13 +43,30 @@ export default {
     }
   },
   setup(props) {
+    const router = useRouter()
     return {
+      async activeKeep() {
+        try {
+          await keepsService.getKeepById(props.keep.id);
+          Modal.getOrCreateInstance(document.getElementById('keep-modal')).toggle()
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
+        }
+      },
+      async goToProfile() {
+        try {
+          router.push({ name: 'Profile', params: { id: props.keep.creatorId } })
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
+        }
+      },
       image: computed(() => `linear-gradient(to top, rgba(50, 50, 50, 0.60) 0% 1%, transparent 50% 100%), url(${props.keep.img})`)
     }
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .keep {
@@ -53,5 +82,10 @@ export default {
 .acc-image {
   border-radius: 50%;
   height: 6vh;
+  transition: all 0.9s ease;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.15);
+  }
 }
 </style>
