@@ -83,9 +83,7 @@
                       title="Add to your vault..."
                       placeholder="Add to a Vault..."
                     >
-                      <optgroup label="Add to a Vault.">
-                        Add to a Vault
-                      </optgroup>
+                      <option value="1">Add to a Vault</option>
                       <option
                         v-for="v in vaults"
                         :key="v.id"
@@ -132,7 +130,7 @@ import { keepsService } from '../services/KeepsService'
 import { Modal } from 'bootstrap'
 export default {
   setup() {
-    const vaultId = ref(0)
+    const vaultId = ref("1")
     onMounted(async () => {
 
     })
@@ -142,7 +140,7 @@ export default {
         try {
           const newVk = { keepId: id, vaultId: vaultId.value }
           await keepsService.setKeepToVault(newVk)
-          vaultId.value = 0
+          vaultId.value = "1"
           Modal.getOrCreateInstance(document.getElementById('keep-modal')).toggle()
         } catch (error) {
           logger.error(error)
@@ -166,7 +164,7 @@ export default {
   height: 2.5vh;
 }
 .object-fit {
-  height: 60vh;
+  height: 100%;
   width: 100%;
 }
 hr {

@@ -2,7 +2,7 @@
   <header>
     <Navbar />
   </header>
-  <main>
+  <main class="vh-88 scrollable-y">
     <router-view />
     <KeepModal />
   </main>
@@ -22,4 +22,7 @@ export default {
 </script>
 <style lang="scss">
 @import "./assets/scss/main.scss";
+.vh-88 {
+  height: 88vh;
+}
 </style>

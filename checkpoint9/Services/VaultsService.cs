@@ -56,6 +56,7 @@ namespace checkpoint9.Services
         throw new Exception("This vault does not belong to you.");
       }
       original.Name = updateData.Name ?? original.Name;
+      original.Image = updateData.Image ?? original.Image;
       original.Description = updateData.Description ?? original.Description;
       original.IsPrivate = updateData.IsPrivate == false ? updateData.IsPrivate : original.IsPrivate;
       _repo.Edit(original);

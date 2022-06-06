@@ -7,6 +7,8 @@
       bg-success
       border-bottom border-info
       px-3
+      elevation-3
+      vh-12
     "
   >
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
@@ -50,5 +52,8 @@ a:hover {
   border-bottom: 2px solid var(--bs-success);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+.vh-12 {
+  height: 12vh;
 }
 </style>
