@@ -30,6 +30,19 @@ namespace checkpoint9.Services
       return found;
     }
 
+    internal List<VaultKeepViewModel> GetByVaultId(int id)
+    {
+      Vault vault = _repo.Get(id);
+      if (vault.IsPrivate)
+      {
+        throw new Exception("This Vault is Private.");
+      }
+      else
+      {
+        return _vkrepo.GetByVaultId(id);
+      }
+    }
+
     internal List<Vault> GetVaultsByProfileId(string id)
     {
       if (id == null)
@@ -39,8 +52,6 @@ namespace checkpoint9.Services
       List<Vault> allVaults = _repo.GetVaultsByProfileId(id);
       List<Vault> publicVaults = allVaults.FindAll(v => !v.IsPrivate);
       return publicVaults;
-
-
     }
 
     internal Vault Create(Vault vaultData)

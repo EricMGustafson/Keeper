@@ -27,7 +27,7 @@ namespace checkpoint9.Controllers
     {
       try
       {
-        List<VaultKeepViewModel> vaultKeeps = _vks.GetByVaultId(id);
+        List<VaultKeepViewModel> vaultKeeps = _vs.GetByVaultId(id);
         return Ok(vaultKeeps);
       }
       catch (Exception e)

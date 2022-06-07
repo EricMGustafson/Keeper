@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container gx-0">
     <div class="row mt-3">
       <div class="col-2">
-        <img class="rounded" :src="profile.picture" alt="" />
+        <img class="rounded vh-15" :src="profile.picture" alt="" />
       </div>
       <div class="col">
         <h1>
@@ -12,30 +12,30 @@
         <h3>Keeps: {{ keepCount }}</h3>
       </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-5">
       <div class="col-12 d-flex">
         <h2>Vaults</h2>
         <h2 class="ms-3 clickable">
           <i
-            class="mdi mdi-plus"
+            class="mdi mdi-plus text-info"
             title="Create Vault"
             data-bs-target="#create-vault"
             data-bs-toggle="modal"
           ></i>
         </h2>
       </div>
-      <div class="col-12 gx-0">
+      <div class="col-12 mt-3">
         <div class="row vh-20 scrollable-y">
           <Vault v-for="v in vaults" :key="v.id" :vault="v" />
         </div>
       </div>
     </div>
-    <div class="row vh-20">
+    <div class="row vh-20 mt-4">
       <div class="col-12 d-flex">
         <h2>Keeps</h2>
         <h2 class="ms-3 clickable">
           <i
-            class="mdi mdi-plus"
+            class="mdi mdi-plus text-info"
             title="Create Keep"
             data-bs-target="#create-keep"
             data-bs-toggle="modal"
@@ -109,12 +109,18 @@ export default {
     transform: scale(1.25);
   }
 }
+
+.vh-15 {
+  height: 17vh;
+}
+
 .vh-20 {
   height: 20vh;
 }
 
 .masonry-container {
   columns: 4 20vw;
+  column-gap: 2rem;
 
   div {
     margin: 0 1rem 2rem 0;
@@ -123,7 +129,7 @@ export default {
   }
   @for $i from 1 through 100 {
     div:nth-child(#{$i}) {
-      $h: (random(400) + 200) + px;
+      $h: (random(300) + 100) + px;
       height: $h;
       // line-height: $h;
       div {

@@ -1,6 +1,6 @@
 <template>
-  <div class="col-md-2 mb-3" @click.stop="activeVault">
-    <div class="vault rounded h-100 elevation-3">
+  <div class="col-md-2 mb-3 text-dark" @click.stop="activeVault">
+    <div class="vault rounded elevation-3">
       <div
         class="d-flex h-100 align-items-end text-light px-2"
         :title="vault.description"
@@ -42,6 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 .vault {
+  height: 20vh;
   background-image: v-bind(image);
   background-position: center;
   background-size: cover;

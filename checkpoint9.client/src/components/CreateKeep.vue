@@ -86,6 +86,7 @@ export default {
         try {
           await keepsService.createKeep(newKeep.value)
           Modal.getOrCreateInstance(document.getElementById('create-keep')).toggle()
+          newKeep.value = {}
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')

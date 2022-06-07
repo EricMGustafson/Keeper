@@ -178,7 +178,10 @@ export default {
       },
       async deleteVaultKeep(id) {
         try {
-          await keepsService.deleteVaultKeep(id)
+          if (await Pop.confirm()) {
+            await keepsService.deleteVaultKeep(id)
+            Modal.getOrCreateInstance(document.getElementById('keep-modal')).toggle()
+          }
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')
@@ -197,7 +200,6 @@ export default {
       keep: computed(() => AppState.activeKeep),
       vaults: computed(() => AppState.myVaults),
       user: computed(() => AppState.account),
-      vaultKeepId: computed(AppState)
     }
   }
 }

@@ -103,6 +103,7 @@ export default {
         try {
           await vaultsService.createVault(newVault.value)
           Modal.getOrCreateInstance(document.getElementById('create-vault')).toggle()
+          newVault.value = {}
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')

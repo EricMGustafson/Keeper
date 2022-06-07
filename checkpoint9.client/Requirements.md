@@ -1,6 +1,7 @@
-The profile page adheres to mock
 The user should be pushed back to the home page when they attempt to open a Vault Page for a vault they do not have access to
 UI adheres to all phases of CodeWorks Design Requirements
+All No Auth API tests pass
+All Invalid Auth API tests pass
 
 
 
@@ -15,6 +16,7 @@ Users can share to other popular social media
 
 
 -----Completed-----
+The profile page adheres to mock
 Add keeps to vaults
 The Vault Page shows only the keeps in that vault
 Anytime a keeps details are viewed, the view count is incremented
@@ -30,8 +32,6 @@ Users can Register, login and automatically authenticated on refresh
 Anytime a keep is kept in a vault the keep count is incremented
 Create and Delete Keeps
 All Valid Auth API tests pass
-All No Auth API tests pass
-All Invalid Auth API tests pass
 
 
 

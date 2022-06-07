@@ -1,15 +1,18 @@
 <template>
-  <div class="container">
-    <div class="row">
+  <div
+    class="container"
+    v-if="vault.isPrivate && vault.creatorId == account.id"
+  >
+    <div class="row mt-5">
       <div class="col-12 mt-3 d-flex justify-content-between">
         <div>
-          <h1 class="mb-0">{{ vault.name }}</h1>
-          <h6 class="ms-1 mt-1">Keeps: {{ vaultKeepCount }}</h6>
+          <h1 class="mb-0 f-38">{{ vault.name }}</h1>
+          <h4 class="ms-2 mt-1">Keeps: {{ vaultKeepCount }}</h4>
         </div>
-        <div v-if="vault.creatorId == user.id">
+        <div v-if="vault.creatorId == account.id">
           <button
             type="submit"
-            class="btn border border-info"
+            class="btn border border-info mt-4"
             title="Create Vault"
             @click.stop="deleteVault(vault.id)"
           >
@@ -44,6 +47,10 @@ export default {
     const route = useRoute()
     onMounted(async () => {
       try {
+        debugger
+        if (AppState.activeVault.isPrivate && AppState.account.id != AppState.activeVault.creatorId) {
+          router.push({ name: 'Home' })
+        }
         if (route.params.id == undefined) {
           router.push({ name: 'Home' })
         } else {
@@ -68,7 +75,7 @@ export default {
       },
       vault: computed(() => AppState.activeVault),
       activeKeeps: computed(() => AppState.activeVaultKeeps),
-      user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
       vaultKeepCount: computed(() => AppState.activeVaultKeeps.length)
     }
   }
@@ -77,6 +84,9 @@ export default {
 
 
 <style lang="scss" scoped>
+.f-38 {
+  font-size: 4rem;
+}
 .masonry-container {
   columns: 4 20vw;
   column-gap: 2rem;
@@ -87,7 +97,7 @@ export default {
   }
   @for $i from 1 through 200 {
     div:nth-child(#{$i}) {
-      $h: (random(400) + 200) + px;
+      $h: (random(300) + 100) + px;
       height: $h;
       // line-height: $h;
       div {

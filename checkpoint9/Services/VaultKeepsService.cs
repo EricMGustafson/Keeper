@@ -29,7 +29,6 @@ namespace checkpoint9.Services
       {
         throw new Exception("This Vault is Private.");
       }
-
     }
 
     private VaultKeep GetById(int id)
