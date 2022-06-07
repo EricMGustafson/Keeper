@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="container"
-    v-if="vault.isPrivate && vault.creatorId == account.id"
-  >
+  <div class="container">
     <div class="row mt-5">
       <div class="col-12 mt-3 d-flex justify-content-between">
         <div>
@@ -48,12 +45,13 @@ export default {
     onMounted(async () => {
       try {
         debugger
-        if (AppState.activeVault.isPrivate && AppState.account.id != AppState.activeVault.creatorId) {
-          router.push({ name: 'Home' })
-        }
         if (route.params.id == undefined) {
           router.push({ name: 'Home' })
         } else {
+          AppState.activeVault = AppState.activeProfileVaults.find(v => v.id == route.params.id)
+          if (AppState.activeVault.isPrivate && AppState.account.id != AppState.activeVault.creatorId) {
+            router.push({ name: 'Home' })
+          }
           await keepsService.getVaultKeeps(AppState.activeVault.id)
         }
       } catch (error) {

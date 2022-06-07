@@ -54,11 +54,11 @@
               <div class="col-md-10 d-flex flex-column align-items-center">
                 <h1>{{ keep.name }}</h1>
                 <p class="pt-3">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Consectetur suscipit, repellat architecto, nihil, sit
-                  assumenda iste deleniti cupiditate est quisquam fugiat omnis
-                  necessitatibus molestias. Eaque perferendis quisquam magnam
-                  delectus repellat.
+                  {{ keep.description }}, Lorem, ipsum dolor sit amet
+                  consectetur adipisicing elit. Consectetur suscipit, repellat
+                  architecto, nihil, sit assumenda iste deleniti cupiditate est
+                  quisquam fugiat omnis necessitatibus molestias. Eaque
+                  perferendis quisquam magnam delectus repellat.
                 </p>
                 <hr class="" />
               </div>

@@ -22,6 +22,22 @@ namespace checkpoint9.Controllers
       _vks = vks;
     }
 
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Vault>> Get(int id)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        Vault vault = _vs.Get(id, userInfo?.Id);
+        return Ok(vault);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
     [HttpGet("{id}/keeps")]
     public ActionResult<List<VaultKeepViewModel>> GetKeepsByVault(int id)
     {
@@ -49,21 +65,6 @@ namespace checkpoint9.Controllers
         newVault.CreatedAt = DateTime.UtcNow;
         newVault.Creator = profile;
         return Ok(newVault);
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Vault>> Get(int id)
-    {
-      try
-      {
-        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        Vault vault = _vs.Get(id, userInfo?.Id);
-        return Ok(vault);
       }
       catch (Exception e)
       {

@@ -16,13 +16,16 @@
           <div class="col-12 pt-4">
             <form @submit.prevent="createKeep">
               <div class="mb-3">
-                <label for="newName" class="form-label visually-hidden"></label>
+                <label
+                  for="newNameKeep"
+                  class="form-label visually-hidden"
+                ></label>
                 <input
                   type="text"
                   class="form-control"
-                  name="newName"
-                  id="newName"
-                  aria-describedby="newName"
+                  name="newNameKeep"
+                  id="newNameKeep"
+                  aria-describedby="newNameKeep"
                   placeholder="Name..."
                   title="Name..."
                   v-model="newKeep.name"
@@ -43,13 +46,13 @@
               </div>
               <div class="mb-3">
                 <label
-                  for="newDescription"
+                  for="newDescriptionKeep"
                   class="form-label visually-hidden"
                 ></label>
                 <textarea
                   class="form-control"
-                  name="newDescription"
-                  id="newDescription"
+                  name="newDescriptionKeep"
+                  id="newDescriptionKeep"
                   rows="5"
                   placeholder="Description..."
                   title="Description..."
