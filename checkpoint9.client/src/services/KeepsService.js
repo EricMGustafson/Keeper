@@ -15,13 +15,28 @@ class KeepsService {
     AppState.activeKeep = res.data
   }
 
+  async getVaultKeeps(id) {
+    const res = await api.get(`api/vaults/${id}/keeps`)
+    logger.log("KS GETVAULTKEEPS", res.data)
+    AppState.activeVaultKeeps = res.data
+  }
+
+  async createKeep(newKeep) {
+    const res = await api.post("api/keeps/", newKeep)
+    logger.log(res.data)
+  }
+
   async setKeepToVault(vk) {
     const res = await api.post("api/vaultkeeps", vk)
-    logger.log("KS SETVAULTKEEP", res.data)
+    AppState.keeps.push(res.data)
+  }
+
+  async deleteVaultKeep(id) {
+    await api.delete(`api/vaultkeeps/${id}`)
+    AppState.activeVaultKeeps = AppState.activeVaultKeeps.filter(vk => vk.id != id)
   }
 
   async deleteKeep(id) {
-
     await api.delete(`api/keeps/${id}`)
     AppState.keeps = AppState.keeps.filter(k => k.id != id)
   }

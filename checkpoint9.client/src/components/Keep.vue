@@ -33,7 +33,7 @@ import Pop from '../utils/Pop'
 import { logger } from '../utils/Logger'
 import { AppState } from '../AppState'
 import { Modal } from 'bootstrap'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { keepsService } from '../services/KeepsService'
 export default {
   props: {
@@ -43,11 +43,16 @@ export default {
     }
   },
   setup(props) {
+    const route = useRoute()
     const router = useRouter()
     return {
       async activeKeep() {
         try {
-          await keepsService.getKeepById(props.keep.id);
+          if (route.name == "Vault") {
+            AppState.activeKeep = AppState.activeVaultKeeps.find(vk => vk.id == props.keep.id)
+          } else {
+            await keepsService.getKeepById(props.keep.id);
+          }
           Modal.getOrCreateInstance(document.getElementById('keep-modal')).toggle()
         } catch (error) {
           logger.error(error)
@@ -71,7 +76,7 @@ export default {
 <style lang="scss" scoped>
 .keep {
   background-image: v-bind(image);
-  background-position: bottom;
+  background-position: center;
   background-size: cover;
   transition: all 0.3s ease;
   cursor: pointer;

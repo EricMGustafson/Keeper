@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using checkpoint9.Models;
 using checkpoint9.Services;
-using CodeWorks.Auth0Provider;
 using Microsoft.AspNetCore.Mvc;
 
 namespace checkpoint9.Controllers
@@ -21,12 +19,6 @@ namespace checkpoint9.Controllers
       _ps = ps;
       _ks = ks;
       _vs = vs;
-    }
-
-    public async Task<ActionResult<Profile>> GetUserInfo()
-    {
-      Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-      return userInfo;
     }
 
     [HttpGet("{id}")]
@@ -58,11 +50,10 @@ namespace checkpoint9.Controllers
     }
 
     [HttpGet("{id}/vaults")]
-    public async Task<ActionResult<List<Vault>>> GetVaultsByProfileIdAsync(string id)
+    public ActionResult<List<Vault>> GetVaultsByProfileIdAsync(string id)
     {
       try
       {
-        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         List<Vault> profileVaults = _vs.GetVaultsByProfileId(id);
         return Ok(profileVaults);
       }

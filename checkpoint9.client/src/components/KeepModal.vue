@@ -3,7 +3,7 @@
     <template #modal-body>
       <div class="container-fluid position-relative text-info">
         <div class="row">
-          <div class="col-md-6 gx-0 vh-70">
+          <div class="col-md-6 gx-0 vh-80">
             <img
               class="object-fit rounded elevation-3"
               :src="keep.img"
@@ -21,7 +21,7 @@
                   title="Close"
                 ></button>
               </div>
-              <div class="col-12 pt-5 d-flex justify-content-center">
+              <div class="col-12 d-flex justify-content-center">
                 <div class="me-4 d-flex" title="Times Viewed">
                   <h4 class="mb-4">
                     <i class="mdi mdi-eye text-success align-middle"></i>
@@ -51,7 +51,7 @@
                   </p>
                 </div>
               </div>
-              <div class="col-md-10 d-flex flex-column align-items-center pt-4">
+              <div class="col-md-10 d-flex flex-column align-items-center">
                 <h1>{{ keep.name }}</h1>
                 <p class="pt-3">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -63,17 +63,10 @@
                 <hr class="" />
               </div>
               <div
-                class="
-                  col-12
-                  d-flex
-                  justify-content-between
-                  align-items-end
-                  pt-5
-                  mt-5
-                "
+                class="col-12 d-flex justify-content-between align-items-end"
               >
                 <div>
-                  <div>
+                  <div v-if="!keep.vaultKeepId">
                     <select
                       class="form-control"
                       name="vault"
@@ -94,9 +87,17 @@
                       </option>
                     </select>
                   </div>
+                  <div v-else>
+                    <button
+                      class="btn btn border border-info"
+                      @click.stop="deleteVaultKeep(keep.vaultKeepId)"
+                    >
+                      Remove from Vault
+                    </button>
+                  </div>
                 </div>
                 <div v-if="keep.creatorId == user.id">
-                  <h2 class="mb-0 selectable" title="Delete Keep">
+                  <h2 class="mb-0 clickable" title="Delete Keep">
                     <i
                       class="mdi mdi-delete-outline"
                       @click="deleteKeep(keep.id)"
@@ -138,18 +139,21 @@ import Pop from '../utils/Pop'
 import { keepsService } from '../services/KeepsService'
 import { Modal } from 'bootstrap'
 import { useRouter } from 'vue-router'
-import { modifierPhases } from '@popperjs/core'
 export default {
   setup() {
     const vaultId = ref("1")
     const router = useRouter()
     onMounted(async () => {
-
+      try {
+        await vaultsService.GetUserVaults(AppState.account.id)
+      } catch (error) {
+        logger.error(error)
+        Pop.toast(error.message, 'error')
+      }
     })
     return {
       vaultId,
       router,
-
       async setKeepToVault(id) {
         try {
           const newVk = { keepId: id, vaultId: vaultId.value }
@@ -172,6 +176,14 @@ export default {
           Pop.toast(error.message, 'error')
         }
       },
+      async deleteVaultKeep(id) {
+        try {
+          await keepsService.deleteVaultKeep(id)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
+        }
+      },
       async goToProfile(id) {
         try {
           router.push({ name: 'Profile', params: { id: id } })
@@ -183,8 +195,9 @@ export default {
       },
 
       keep: computed(() => AppState.activeKeep),
-      vaults: computed(() => AppState.userVaults),
-      user: computed(() => AppState.account)
+      vaults: computed(() => AppState.myVaults),
+      user: computed(() => AppState.account),
+      vaultKeepId: computed(AppState)
     }
   }
 }
@@ -199,8 +212,8 @@ export default {
 .keepr-logo {
   height: 2.5vh;
 }
-.vh-70 {
-  height: 70vh;
+.vh-80 {
+  height: 80vh;
 }
 .object-fit {
   height: 100%;

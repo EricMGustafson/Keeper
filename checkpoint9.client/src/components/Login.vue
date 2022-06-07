@@ -34,9 +34,12 @@
         class="dropdown-menu p-0 list-group w-100"
         aria-labelledby="authDropdown"
       >
-        <router-link :to="{ name: 'Account' }">
+        <router-link
+          :to="{ name: 'Profile', params: { id: account.id } }"
+          @click="getProfileVaultsById"
+        >
           <div class="list-group-item list-group-item-action hoverable">
-            Manage Account
+            Manage Profile
           </div>
         </router-link>
         <div
@@ -56,6 +59,9 @@
 import { computed } from "@vue/reactivity";
 import { AppState } from "../AppState";
 import { AuthService } from "../services/AuthService";
+import { logger } from '../utils/Logger';
+import Pop from '../utils/Pop';
+import { vaultsService } from '../services/VaultsService';
 export default {
   setup() {
     return {
@@ -67,6 +73,9 @@ export default {
       async logout() {
         AuthService.logout({ returnTo: window.location.origin });
       },
+      async getProfileVaultsById() {
+        AppState.activeProfileVaults = AppState.myVaults
+      }
     };
   },
 };

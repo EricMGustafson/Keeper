@@ -27,7 +27,7 @@ namespace checkpoint9.Repositories
 
     internal Keep Get(int id)
     {
-      string sql = "SELECT a.*, k.* FROM keeps k JOIN accounts a ON k.id = @id;";
+      string sql = "SELECT a.*, k.* FROM keeps k JOIN accounts a ON k.creatorId = a.id WHERE k.id = @id;";
       return _db.Query<Account, Keep, Keep>(sql, (a, k) =>
       {
         k.Creator = a;
@@ -37,7 +37,7 @@ namespace checkpoint9.Repositories
 
     internal List<Keep> GetKeepsByProfileId(string id)
     {
-      string sql = "SELECT a.*, k.* FROM keeps k JOIN accounts a ON k.creatorId = @id;";
+      string sql = "SELECT a.*, k.* FROM keeps k JOIN accounts a ON k.creatorId = a.id WHERE k.creatorId = @id;";
       return _db.Query<Account, Keep, Keep>(sql, (a, k) =>
       {
         k.Creator = a;
