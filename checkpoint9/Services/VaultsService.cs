@@ -30,10 +30,10 @@ namespace checkpoint9.Services
       return found;
     }
 
-    internal List<VaultKeepViewModel> GetByVaultId(int id)
+    internal List<VaultKeepViewModel> GetByVaultId(int id, string userId)
     {
       Vault vault = _repo.Get(id);
-      if (vault.IsPrivate)
+      if (vault.IsPrivate && vault.CreatorId != userId)
       {
         throw new Exception("This Vault is Private.");
       }

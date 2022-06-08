@@ -44,19 +44,18 @@ export default {
     const route = useRoute()
     onMounted(async () => {
       try {
-        debugger
         if (route.params.id == undefined) {
           router.push({ name: 'Home' })
         } else {
-          AppState.activeVault = AppState.activeProfileVaults.find(v => v.id == route.params.id)
+          await vaultsService.getVaultsById(route.params.id)
           if (AppState.activeVault.isPrivate && AppState.account.id != AppState.activeVault.creatorId) {
+            Pop.toast("This vault is set to private by it's creator.")
             router.push({ name: 'Home' })
           }
           await keepsService.getVaultKeeps(AppState.activeVault.id)
         }
       } catch (error) {
-        logger.error(error)
-        Pop.toast(error.message, 'error')
+        router.push({ name: 'Home' })
       }
     })
     return {

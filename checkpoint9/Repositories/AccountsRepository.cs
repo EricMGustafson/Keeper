@@ -29,8 +29,6 @@ namespace checkpoint9.Repositories
 
     internal List<Vault> GetMyVaults(string id)
     {
-      // string sql = "SELECT a.*, v.* FROM vaults JOIN accounts a ON v.creatorId = a.id WHERE v.creatorId = @id;";
-      // return _db.Query<Vault>(sql, new { id }).ToList();
       string sql = "SELECT a.*, v.* FROM vaults v JOIN accounts a ON v.creatorId = a.id WHERE v.creatorId = @id;";
       return _db.Query<Account, Vault, Vault>(sql, (a, v) =>
       {

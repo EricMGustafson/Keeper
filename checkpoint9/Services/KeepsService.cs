@@ -68,7 +68,6 @@ namespace checkpoint9.Services
 
     }
 
-
     internal void Delete(int id, string userId)
     {
       Keep keep = Get(id, userId);

@@ -42,9 +42,9 @@ export default {
 a:hover {
   text-decoration: none;
 }
-.logo {
+/* .logo {
   width: 2.5em;
-}
+} */
 .nav-link {
   text-transform: uppercase;
 }

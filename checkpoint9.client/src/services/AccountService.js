@@ -13,7 +13,6 @@ class AccountService {
   }
   async getProfileById(id) {
     const res = await api.get(`api/profiles/${id}`)
-    logger.log("AS GETPROFILEBYID", res.data)
     AppState.activeProfile = res.data
   }
 }

@@ -34,12 +34,9 @@
         class="dropdown-menu p-0 list-group w-100"
         aria-labelledby="authDropdown"
       >
-        <router-link
-          :to="{ name: 'Profile', params: { id: account.id } }"
-          @click="getProfileVaultsById"
-        >
+        <router-link :to="{ name: 'Account' }" @click="getProfileVaultsById">
           <div class="list-group-item list-group-item-action hoverable">
-            Manage Profile
+            My Profile
           </div>
         </router-link>
         <div
@@ -62,6 +59,7 @@ import { AuthService } from "../services/AuthService";
 import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 import { vaultsService } from '../services/VaultsService';
+import { accountService } from '../services/AccountService';
 export default {
   setup() {
     return {
@@ -75,6 +73,7 @@ export default {
       },
       async getProfileVaultsById() {
         AppState.activeProfileVaults = AppState.myVaults
+        await accountService.getProfileById(AppState.account.id)
       }
     };
   },

@@ -39,11 +39,12 @@ namespace checkpoint9.Controllers
     }
 
     [HttpGet("{id}/keeps")]
-    public ActionResult<List<VaultKeepViewModel>> GetKeepsByVault(int id)
+    public async Task<ActionResult<List<VaultKeepViewModel>>> GetKeepsByVault(int id)
     {
       try
       {
-        List<VaultKeepViewModel> vaultKeeps = _vs.GetByVaultId(id);
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        List<VaultKeepViewModel> vaultKeeps = _vs.GetByVaultId(id, userInfo?.Id);
         return Ok(vaultKeeps);
       }
       catch (Exception e)

@@ -145,7 +145,7 @@ export default {
     const router = useRouter()
     onMounted(async () => {
       try {
-        await vaultsService.GetUserVaults(AppState.account.id)
+        // await vaultsService.GetMyVaults()
       } catch (error) {
         logger.error(error)
         Pop.toast(error.message, 'error')

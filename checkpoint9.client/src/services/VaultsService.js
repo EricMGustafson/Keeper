@@ -1,10 +1,13 @@
 import { AppState } from "../AppState"
-import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
 class VaultsService {
-  async GetUserVaults(id) {
-    const res = await api.get(`api/profiles/${id}/vaults`)
+  async getVaultsById(id) {
+    const res = await api.get(`api/vaults/${id}`)
+    AppState.activeVault = res.data
+  }
+  async GetMyVaults() {
+    const res = await api.get("account/vaults")
     AppState.myVaults = res.data
   }
   async getVaultsByProfileId(id) {
@@ -13,7 +16,6 @@ class VaultsService {
   }
   async createVault(newVault) {
     const res = await api.post("api/vaults/", newVault)
-    // logger.log(res.data)
     AppState.activeProfileVaults.push(res.data)
   }
   async deleteVault(id) {
