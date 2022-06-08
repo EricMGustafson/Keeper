@@ -78,6 +78,10 @@ namespace checkpoint9.Services
     internal void Delete(int id, string userId)
     {
       Vault vault = Get(id, userId);
+      if (vault.CreatorId != userId)
+      {
+        throw new Exception("You do not have access to this Vault.");
+      }
       _repo.Delete(id);
     }
   }

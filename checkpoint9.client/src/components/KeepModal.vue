@@ -65,7 +65,7 @@
               <div
                 class="col-12 d-flex justify-content-between align-items-end"
               >
-                <div>
+                <div v-if="user.id">
                   <div v-if="!keep.vaultKeepId">
                     <select
                       class="form-control"
