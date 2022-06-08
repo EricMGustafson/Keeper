@@ -11,7 +11,7 @@
 
     <div
       class="bg-info rounded dropdown my-2 my-lg-0"
-      title="Manage Account"
+      title="My Profile"
       v-else
     >
       <div
@@ -41,6 +41,7 @@
         </router-link>
         <div
           class="list-group-item list-group-item-action hoverable text-danger"
+          title="Logout"
           @click="logout"
         >
           <i class="mdi mdi-logout"></i>
@@ -73,7 +74,7 @@ export default {
       },
       async getProfileVaultsById() {
         AppState.activeProfileVaults = AppState.myVaults
-        await accountService.getProfileById(AppState.account.id)
+        // await accountService.getProfileById(AppState.account.id)
       }
     };
   },

@@ -71,27 +71,13 @@ export default {
 
 
   setup() {
-    const route = useRoute()
-    const router = useRouter()
-    onMounted(async () => {
-      if (route.params.id == undefined) {
-        router.push({ name: 'Home' })
-      } else {
-        try {
-
-        } catch (error) {
-          logger.error(error)
-          Pop.toast(error.message, 'error')
-        }
-      }
-    })
     return {
-      profile: computed(() => AppState.activeProfile),
+      profile: computed(() => AppState.account),
       vaults: computed(() => AppState.myVaults),
       keeps: computed(() => AppState.keeps.filter(k => k.creatorId == AppState.account.id)),
-      vaultCount: computed(() => AppState.activeProfileVaults.length),
+      vaultCount: computed(() => AppState.myVaults.length),
       keepCount: computed(() => {
-        const userKeeps = AppState.keeps.filter(k => k.creatorId == route.params.id)
+        const userKeeps = AppState.keeps.filter(k => k.creatorId == AppState.account.id)
         return userKeeps.length
       })
     }
@@ -110,7 +96,7 @@ export default {
 }
 
 .vh-15 {
-  height: 17vh;
+  height: 25vh;
 }
 
 .vh-20 {

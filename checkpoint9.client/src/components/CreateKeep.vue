@@ -28,6 +28,7 @@
                   aria-describedby="newNameKeep"
                   placeholder="Name..."
                   title="Name..."
+                  required
                   v-model="newKeep.name"
                 />
               </div>
@@ -41,6 +42,7 @@
                   aria-describedby="newImg"
                   placeholder="Image Url..."
                   title="Image Url..."
+                  required
                   v-model="newKeep.img"
                 />
               </div>

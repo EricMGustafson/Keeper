@@ -15,7 +15,7 @@
     <div class="row mt-5">
       <div class="col-12 d-flex">
         <h2>Vaults</h2>
-        <h2 class="ms-3 clickable">
+        <h2 class="ms-3 clickable" v-if="profile.id == account.id">
           <i
             class="mdi mdi-plus text-info"
             title="Create Vault"
@@ -33,7 +33,7 @@
     <div class="row vh-20 mt-4">
       <div class="col-12 d-flex">
         <h2>Keeps</h2>
-        <h2 class="ms-3 clickable">
+        <h2 class="ms-3 clickable" v-if="profile.id == account.id">
           <i
             class="mdi mdi-plus text-info"
             title="Create Keep"
@@ -88,6 +88,7 @@ export default {
     })
     return {
       profile: computed(() => AppState.activeProfile),
+      account: computed(() => AppState.account),
       vaults: computed(() => AppState.activeProfileVaults),
       keeps: computed(() => AppState.keeps.filter(k => k.creatorId == route.params.id)),
       vaultCount: computed(() => AppState.activeProfileVaults.length),
@@ -111,7 +112,7 @@ export default {
 }
 
 .vh-15 {
-  height: 17vh;
+  height: 25vh;
 }
 
 .vh-20 {

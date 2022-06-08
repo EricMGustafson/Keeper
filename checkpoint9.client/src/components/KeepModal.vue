@@ -88,12 +88,15 @@
                     </select>
                   </div>
                   <div v-else>
-                    <button
-                      class="btn btn border border-info"
-                      @click.stop="deleteVaultKeep(keep.vaultKeepId)"
-                    >
-                      Remove from Vault
-                    </button>
+                    <div v-if="vault.creatorId == user.id">
+                      <button
+                        class="btn btn border border-info"
+                        @click.stop="deleteVaultKeep(keep.vaultKeepId)"
+                        title="Remove from vault"
+                      >
+                        Remove from Vault
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div v-if="keep.creatorId == user.id">
@@ -105,7 +108,7 @@
                   </h2>
                 </div>
                 <div
-                  class="d-flex clickable"
+                  class="d-flex clickable pb-2"
                   title="Go to Profile"
                   @click="goToProfile(keep.creatorId)"
                 >
@@ -133,7 +136,6 @@
 import { computed, ref } from '@vue/reactivity'
 import { AppState } from '../AppState'
 import { onMounted } from '@vue/runtime-core'
-import { vaultsService } from '../services/VaultsService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { keepsService } from '../services/KeepsService'
@@ -200,6 +202,7 @@ export default {
       keep: computed(() => AppState.activeKeep),
       vaults: computed(() => AppState.myVaults),
       user: computed(() => AppState.account),
+      vault: computed(() => AppState.activeVault)
     }
   }
 }
