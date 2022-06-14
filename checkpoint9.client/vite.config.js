@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [vue()],
   build: {
-    outDir: 'docs',
+    outDir: '../checkpoint9/wwwroot',
     sourcemap: false
   },
   server: {

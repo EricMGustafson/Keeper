@@ -10,7 +10,7 @@
           <button
             type="submit"
             class="btn border border-info mt-4"
-            title="Create Vault"
+            title="Delete Vault"
             @click.stop="deleteVault(vault.id)"
           >
             Delete Vault

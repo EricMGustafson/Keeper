@@ -20,6 +20,7 @@ class VaultsService {
   }
   async deleteVault(id) {
     await api.delete(`api/vaults/${id}`)
+    AppState.myVaults = AppState.myVaults.filter(v => v.id != id)
   }
 }
 

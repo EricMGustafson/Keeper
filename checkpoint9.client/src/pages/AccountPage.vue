@@ -59,17 +59,9 @@
 
 
 <script>
-import { computed, onMounted, watchEffect } from '@vue/runtime-core'
-import Pop from '../utils/Pop'
-import { logger } from '../utils/Logger'
-import { accountService } from '../services/AccountService'
-import { useRoute, useRouter } from 'vue-router'
+import { computed } from '@vue/runtime-core'
 import { AppState } from '../AppState'
-import { vaultsService } from '../services/VaultsService'
 export default {
-
-
-
   setup() {
     return {
       profile: computed(() => AppState.account),
